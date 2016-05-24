@@ -12,17 +12,17 @@ import play.api.mvc.Result
 object JsonResponseGenerator extends ResponseGenerator {
 
   def generateResponse(data: String): Result = {
-    var json = Json.obj("status" -> "ok", "message" -> data)
+    var json = Json.obj("status" -> "OK", "message" -> data)
     Ok(json)
   }
 
    def generateResponse(data: JsObject): Result = {
-    var json = Json.obj("status" -> "ok", "message" -> data)
+    var json = Json.obj("status" -> "OK", "message" -> data)
     Ok(json)
   }
    
   def generateErrorResponse(e: JsObject): Result = {
-    var json = Json.obj("status" -> "ok", "message" -> e)
+    var json = Json.obj("status" -> "Not OK", "message" -> e)
     BadRequest(json)
   }
   
