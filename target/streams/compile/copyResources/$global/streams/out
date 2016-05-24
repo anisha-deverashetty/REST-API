@@ -1,8 +1,0 @@
-[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\application.conf,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\application.conf)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\evolutions,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\evolutions)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\routes,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\routes)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\evolutions\default,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\evolutions\default)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\evolutions\default\1.sql,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\evolutions\default\1.sql)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\evolutions\default\2.sql,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\evolutions\default\2.sql)[0m
-[0m[[0mdebug[0m] [0m	(C:\Users\anisha\Downloads\REST-API\conf\evolutions\default\3.sql,C:\Users\anisha\Downloads\REST-API\target\scala-2.11\classes\evolutions\default\3.sql)[0m

@@ -1,3 +1,0 @@
-2016-05-24 13:56:15,738 [INFO] from play.core.server.NettyServer in pool-69-thread-2 - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
-2016-05-24 13:56:21,574 [WARN] from application in ForkJoinPool-4-worker-1 - Logger configuration in conf files is deprecated and has no effect. Use a logback configuration file instead.
-2016-05-24 13:56:24,053 [INFO] from play.api.Play in ForkJoinPool-4-worker-1 - Application started (Dev)
