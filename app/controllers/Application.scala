@@ -7,7 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import models._
 import services._
-
+import utilities._
 /**
  *
  * Created by Anisha Sampath Kumar
@@ -18,61 +18,49 @@ class Application @Inject() (customerService: CustomerService, invoiceService: I
 
     val customer = request.body.validate[List[Customer]]
     customer.fold(
-      errors => Future(BadRequest(Json.obj(
-        "status" -> "Not OK",
-        "error" -> JsError.toJson(errors)))),
+      errors => Future(JsonResponseGenerator.generateErrorResponse(JsError.toJson(errors))),
       customer =>
-        customerService.addCustomers(customer).map(result => {
+        customerService.addCustomers(customer).map(result =>
           result match {
-            case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.message))
-          }
-        }))
+            case Right(result: String)     => JsonResponseGenerator.generateResponse(result)
+            case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
+          }))
   }
 
   def createInvoice = Action.async(BodyParsers.parse.json) { request =>
 
     val invoice = request.body.validate[List[Invoice]]
     invoice.fold(
-      errors => Future(BadRequest(Json.obj(
-        "status" -> "Not OK",
-        "error" -> JsError.toJson(errors)))),
+      errors => Future(JsonResponseGenerator.generateErrorResponse(JsError.toJson(errors))),
       invoice =>
-        invoiceService.addInvoices(invoice).map(result => {
+        invoiceService.addInvoices(invoice).map(result =>
           result match {
-            case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.message))
-          }
-        }))
+            case Right(result: String)     => JsonResponseGenerator.generateResponse(result)
+            case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
+          }))
   }
+  
   def createPayment = Action.async(BodyParsers.parse.json) { request =>
 
     val payment = request.body.validate[List[Payment]]
     payment.fold(
-      errors => Future(BadRequest(Json.obj(
-        "status" -> "Not OK",
-        "error" -> JsError.toJson(errors)))),
+      errors => Future(JsonResponseGenerator.generateErrorResponse(JsError.toJson(errors))),
       payment =>
         paymentService.addPayments(payment).map(result =>
           result match {
-            case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.message))
+            case Right(result: String)     => JsonResponseGenerator.generateResponse(result)
+            case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
           }))
   }
 
   def getCustomer(customerId: String) = Action.async {
 
-    val res = customerService.getAllCustomerData(customerId) //.map(result => {
-    res.map(result => {
+    val res = customerService.getAllCustomerData(customerId)
+    res.map(result =>
       result match {
-        case Right(res: Customer) => Ok(Json.obj("status" -> "ok", "message" -> Json.toJson(res)))
-        case Left(re: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK", "error" -> re.message))
-      }
-    })
+        case Right(result: JsObject)   => JsonResponseGenerator.generateResponse(result)
+        case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
+      })
   }
-
 
 }

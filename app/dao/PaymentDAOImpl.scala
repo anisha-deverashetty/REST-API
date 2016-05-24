@@ -9,6 +9,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api._
 import slick.driver.MySQLDriver.api._
 import models._
+import utilities._
 
 /**
  *

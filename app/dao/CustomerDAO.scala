@@ -2,7 +2,7 @@ package dao
 
 import com.google.inject.ImplementedBy
 import models.Customer
-import models.ErrorMessage
+import utilities._
 import scala.concurrent.Future
 
 /**

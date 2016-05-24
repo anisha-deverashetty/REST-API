@@ -6,7 +6,7 @@ import com.google.inject.Singleton
 import dao.InvoiceDAO
 import models.Invoice
 import models.Payment
-import models.ErrorMessage
+import utilities._
 import scala.concurrent.{ Future, ExecutionContext }
 import scala.concurrent.blocking
 import scala.util.{ Success, Failure }
@@ -27,39 +27,32 @@ class InvoiceService @Inject() (invoiceDAO: InvoiceDAO, paymentService: PaymentS
   }
 */
 
-  def getInvoicesByCustomer(customerId: String): Seq[JsObject] = {
+  def getInvoicesByCustomer(customerId: String): Future[Seq[JsObject]] = {
 
     val invoices = invoiceDAO.getByCustomerId(customerId)
-
-    var invoiceObj = Seq[JsObject]()
-
-    invoices.map(invoices => {
-      val futures = for (i <- invoices) yield {
-        getInvoiceWithPayment(i)
+    invoices.flatMap(invoices => {
+      val futures = for (invoice <- invoices) yield {
+        getInvoiceWithPayment(invoice)
       }
-      //Seq[Future[JsObject]]
-      Future.sequence(futures).map {
-        results => return results
+      Future.sequence(futures).map { results => results
       }.recover {
-        case e: Exception => return invoiceObj
+        case e: Exception => Seq[JsObject]()
       }
-      invoiceObj
     })
   }
 
   def getInvoiceWithPayment(invoice: Invoice): Future[JsObject] = {
 
-    val payment = paymentService.getPaymentByInvoiceID(invoice.invoice_id)
+    var invoiceObj = Json.toJson(invoice).as[JsObject]
+    val payment = paymentService.getPaymentByInvoice(invoice.invoice_id)   
     payment.map(payment =>
       payment match {
-        case Some(payment: Payment) => {
-          var jsonObject = Json.toJson(invoice).as[JsObject]
-          jsonObject = jsonObject + ("Payment", Json.toJson(payment))
-          println("Payments : " + jsonObject)
-          //Thread.sleep(5000)
-          jsonObject
+        case Some(payment: Payment) => {          
+          invoiceObj = invoiceObj + ("payment", Json.toJson(payment))
+          //println("Payments : " + jsonObject)
+          invoiceObj
         }
-        case _ => Json.toJson(invoice).as[JsObject]
+        case _ => invoiceObj
       })
   }
 

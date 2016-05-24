@@ -7,7 +7,7 @@ import dao.CustomerDAO
 import models.Customer
 import models.Invoice
 import models.Payment
-import models.ErrorMessage
+import utilities._
 import scala.concurrent.{ Future, ExecutionContext }
 
 /**
@@ -22,20 +22,22 @@ class CustomerService @Inject() (customerDAO: CustomerDAO, invoiceService: Invoi
     customerDAO.add(customer)
   }
 
-  def getAllCustomerData(customerId: String): Future[Either[ErrorMessage, Customer]] = {
+  def getAllCustomerData(customerId: String): Future[Either[ErrorMessage, JsObject]] = {
 
     val result = customerDAO.get(customerId)
-    result.map(result =>
+    result.flatMap(result =>
       result match {
         case Right(customer: Customer) => {
-          invoiceService.getInvoicesByCustomer(customerId).map(res => println("arr : " + res))
-          Right(customer)
+          var customerObject = Json.toJson(customer).as[JsObject]
+          invoiceService.getInvoicesByCustomer(customerId).map(result => {
+            if (!result.isEmpty)
+              customerObject = customerObject + ("invoices", Json.toJson(result))
+            println("customers : " + customerObject)
+            Right(customerObject)
+          })
         }
-        case Left(error: ErrorMessage) => Left(error)
+        case Left(error: ErrorMessage) => Future(Left(error))
       })
   }
 
-  
-
-  
 }

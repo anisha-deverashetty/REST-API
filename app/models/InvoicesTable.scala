@@ -5,7 +5,6 @@ import slick.driver.MySQLDriver.api._
 import play.api.db.slick.DatabaseConfigProvider
 import org.joda.time.DateTime
 import com.github.tototoshi.slick.MySQLJodaSupport._
-
 /**
  *
  * Created by Anisha Sampath Kumar
