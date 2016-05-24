@@ -25,8 +25,8 @@ class Application @Inject() (customerService: CustomerService, invoiceService: I
         customerService.addCustomers(customer).map(result => {
           result match {
             case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: Exception) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.getCause.getMessage))
+            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
+              "error" -> result.message))
           }
         }))
   }
@@ -42,12 +42,11 @@ class Application @Inject() (customerService: CustomerService, invoiceService: I
         invoiceService.addInvoices(invoice).map(result => {
           result match {
             case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: Exception) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.getCause.getMessage))
+            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
+              "error" -> result.message))
           }
         }))
   }
-
   def createPayment = Action.async(BodyParsers.parse.json) { request =>
 
     val payment = request.body.validate[List[Payment]]
@@ -56,12 +55,24 @@ class Application @Inject() (customerService: CustomerService, invoiceService: I
         "status" -> "Not OK",
         "error" -> JsError.toJson(errors)))),
       payment =>
-        paymentService.addPayments(payment).map(result => {
+        paymentService.addPayments(payment).map(result =>
           result match {
             case Right(result: String) => Ok(Json.obj("status" -> "ok", "message" -> result))
-            case Left(result: Exception) => BadRequest(Json.obj("status" -> "Not OK",
-              "error" -> result.getCause.getMessage))
-          }
-        }))
+            case Left(result: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK",
+              "error" -> result.message))
+          }))
   }
+
+  def getCustomer(customerId: String) = Action.async {
+
+    val res = customerService.getAllCustomerData(customerId) //.map(result => {
+    res.map(result => {
+      result match {
+        case Right(res: Customer) => Ok(Json.obj("status" -> "ok", "message" -> Json.toJson(res)))
+        case Left(re: ErrorMessage) => BadRequest(Json.obj("status" -> "Not OK", "error" -> re.message))
+      }
+    })
+  }
+
+
 }

@@ -11,20 +11,26 @@ import slick.driver.MySQLDriver.api._
 import models._
 
 /**
-  * 
-  * Created by Anisha Sampath Kumar
-  */
+ *
+ * Created by Anisha Sampath Kumar
+ */
 class PaymentDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extends PaymentDAO {
 
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   val paymentQuery = TableQuery[PaymentsTable]
 
-  override def add(payments : List[Payment]): Future[Either[Exception, String]] = {
+  override def add(payments: List[Payment]): Future[Either[ErrorMessage, String]] = {
 
     dbConfig.db.run(paymentQuery ++= payments).map(res => Right(payments.size + " entities added")).recover {
-      case ex: Exception => Left(ex)
+      case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, "database_error"))
     }
+  }
+
+  override def getByInvoiceId(invoiceId: String): Future[Option[Payment]] = {
+
+    dbConfig.db.run(paymentQuery.filter(_.invoice_id === invoiceId).result.headOption)
+    
   }
 
 }

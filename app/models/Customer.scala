@@ -2,6 +2,7 @@ package models
 
 import play.api.libs.json._
 import play.api.libs.json.Reads._
+import play.api.libs.json.Writes._
 import play.api.libs.functional.syntax._
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
@@ -41,6 +42,17 @@ object Customer {
     (JsPath \ "customer_zipcode").readNullable[String] and
     (JsPath \ "customer_city").readNullable[String] and
     (JsPath \ "customer_country").readNullable[String])(Customer.apply _)
+    
+    implicit val customerWrites: Writes[Customer] = (
+    (JsPath \ "customer_id").write[String] and
+    (JsPath \ "customer_firstname").write[String] and
+    (JsPath \ "customer_lastname").writeNullable[String] and
+    (JsPath \ "customer_email").writeNullable[String] and
+    (JsPath \ "customer_phone").writeNullable[String] and
+    (JsPath \ "customer_address").writeNullable[String] and
+    (JsPath \ "customer_zipcode").writeNullable[String] and
+    (JsPath \ "customer_city").writeNullable[String] and
+    (JsPath \ "customer_country").writeNullable[String])(unlift(Customer.unapply _))
 
 }
 

@@ -9,4 +9,4 @@ POST     /invoice                            controllers.Application.createInvoi
 
 POST     /payment                            controllers.Application.createPayment
 
-
+GET		 /customer/:customerId				 controllers.Application.getCustomer(customerId: String)

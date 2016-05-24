@@ -31,5 +31,11 @@ object Payment {
     (JsPath \ "payment_datetime").read[DateTime](Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")) and
     (JsPath \ "payment_type").readNullable[String])(Payment.apply _)
 
+  implicit val paymentWrites: Writes[Payment] = (
+    (JsPath \ "payment_id").write[String] and
+    (JsPath \ "invoice_id").write[String] and
+    (JsPath \ "payment_datetime").write[DateTime](Writes.jodaDateWrites("yyyy-MM-dd HH:mm:ss")) and
+    (JsPath \ "payment_type").writeNullable[String])(unlift(Payment.unapply _))
+
 }
 

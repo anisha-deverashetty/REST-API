@@ -16,7 +16,7 @@ import com.github.tototoshi.slick.MySQLJodaSupport._
  */
 class PaymentsTable(tag: Tag) extends Table[Payment](tag, "f_payments") {
 
-  def payment_id = column[String]("payment_id")
+  def payment_id = column[String]("payment_id", O.PrimaryKey)
   def invoice_id = column[String]("invoice_id")
   def payment_datetime = column[DateTime]("payment_datetime")
   def payment_type = column[Option[String]]("payment_type")

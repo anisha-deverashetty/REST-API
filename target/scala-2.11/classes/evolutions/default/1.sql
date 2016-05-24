@@ -3,8 +3,8 @@
 # --- !Ups
 
 CREATE TABLE d_customers (  
-    id SERIAL PRIMARY KEY,
-    customer_id varchar(64) NOT NULL,
+    id SERIAL,
+    customer_id varchar(64) PRIMARY KEY,
     customer_firstname varchar(32) NOT NULL,
     customer_lastname varchar(32),
     customer_email varchar(32),

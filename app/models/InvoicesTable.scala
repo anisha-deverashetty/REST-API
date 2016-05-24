@@ -16,11 +16,8 @@ import com.github.tototoshi.slick.MySQLJodaSupport._
  */
 class InvoicesTable(tag: Tag) extends Table[Invoice](tag, "f_invoices") {
 
-  def invoice_id = column[String]("invoice_id")
-  def line_item_id = column[String]("line_item_id")
+  def invoice_id = column[String]("invoice_id",  O.PrimaryKey)
   def customer_id = column[String]("customer_id")
-  def product_id = column[String]("product_id")
-  def product_quantity = column[BigDecimal]("product_quantity")
   def net_amount = column[Option[BigDecimal]]("net_amount")
   def vat_amount = column[Option[BigDecimal]]("vat_amount")
   def total_amount = column[BigDecimal]("total_amount")
@@ -28,10 +25,9 @@ class InvoicesTable(tag: Tag) extends Table[Invoice](tag, "f_invoices") {
   def warehouse_id = column[Option[String]]("warehouse_id")
   def supplier_id = column[Option[String]]("supplier_id")
   def salesperson_id = column[Option[String]]("salesperson_id")
-  def cancel_id = column[Option[String]]("cancel_id")
 
   def * =
-    (invoice_id, line_item_id, customer_id, product_id, product_quantity, net_amount, vat_amount,
+    (invoice_id, customer_id, net_amount, vat_amount,
       total_amount, invoice_datetime, warehouse_id, supplier_id,
-      salesperson_id, cancel_id) <> ((Invoice.apply _).tupled, Invoice.unapply)
+      salesperson_id) <> ((Invoice.apply _).tupled, Invoice.unapply)
 }

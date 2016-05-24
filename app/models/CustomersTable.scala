@@ -14,7 +14,7 @@ import play.api.db.slick.DatabaseConfigProvider
  */
 class CustomersTable(tag: Tag) extends Table[Customer](tag, "d_customers") {
 
-  def customer_id = column[String]("customer_id")
+  def customer_id = column[String]("customer_id", O.PrimaryKey)
   def customer_firstname = column[String]("customer_firstname")
   def customer_lastname = column[Option[String]]("customer_lastname")
   def customer_email = column[Option[String]]("customer_email")

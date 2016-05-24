@@ -20,11 +20,17 @@ class InvoiceDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extend
 
   val invoiceQuery = TableQuery[InvoicesTable]
 
-  override def add(invoices: List[Invoice]): Future[Either[Exception, String]] = {
+  override def add(invoices: List[Invoice]): Future[Either[ErrorMessage, String]] = {
 
     dbConfig.db.run(invoiceQuery ++= invoices).map(res => Right(invoices.size + " entities added")).recover {
-      case ex: Exception => Left(ex)
+      case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, "database_error"))
     }
+  }
+
+  override def getByCustomerId(customerId: String): Future[Seq[Invoice]] = {
+
+    dbConfig.db.run(invoiceQuery.filter(_.customer_id === customerId).result)
+    
   }
 
 }
