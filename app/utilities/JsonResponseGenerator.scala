@@ -27,7 +27,7 @@ object JsonResponseGenerator extends ResponseGenerator {
   }
   
   def generateErrorResponse(error: ErrorMessage): Result = {
-    var json = Json.obj("status" -> "Not OK", "error" -> error.message)
+    var json = Json.obj("status" -> "Not OK", "message" -> error.message)
     error.errorType match {
       case ErrorType.Bad_Request    => BadRequest(json)
       case ErrorType.Database_Error => InternalServerError(json)

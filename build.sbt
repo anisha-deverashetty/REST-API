@@ -19,7 +19,9 @@ libraryDependencies ++= Seq(
     "com.typesafe.slick" %% "slick" % "3.1.1",
   	"com.github.tototoshi" %% "slick-joda-mapper" % "2.2.0",
   	"joda-time" % "joda-time" % "2.7",
-  	"org.joda" % "joda-convert" % "1.7"
+  	"org.joda" % "joda-convert" % "1.7",
+  	specs2 % Test,
+  	"org.mockito" % "mockito-core" % "1.8.5"
 )
 
 resolvers ++= Seq(

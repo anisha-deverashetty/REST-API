@@ -3,10 +3,11 @@
 # ~~~~
 
 # Home page
-POST     /customer                           controllers.Application.createCustomer
 
-POST     /invoice                            controllers.Application.createInvoice
+POST     /customer                           controllers.ApplicationController.createCustomer
 
-POST     /payment                            controllers.Application.createPayment
+POST     /invoice                            controllers.ApplicationController.createInvoice
 
-GET		 /customer/:customerId				 controllers.Application.getCustomer(customerId: String)
+POST     /payment                            controllers.ApplicationController.createPayment
+
+GET		 /customer/:customerId				 controllers.ApplicationController.getCustomer(customerId: String)

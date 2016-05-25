@@ -16,7 +16,7 @@ import scala.concurrent.{ Future, ExecutionContext }
  */
 @Singleton
 class CustomerService @Inject() (customerDAO: CustomerDAO, invoiceService: InvoiceService,
-                                 paymentService: PaymentService, implicit val ec: ExecutionContext) {
+                                 implicit val ec: ExecutionContext) {
 
   def addCustomers(customer: List[Customer]): Future[Either[ErrorMessage, String]] = {
     customerDAO.add(customer)

@@ -12,19 +12,19 @@ import utilities._
  *
  * Created by Anisha Sampath Kumar
  */
-class Application @Inject() (customerService: CustomerService, invoiceService: InvoiceService, paymentService: PaymentService) extends Controller {
+class ApplicationController @Inject() (customerService: CustomerService, invoiceService: InvoiceService, paymentService: PaymentService) extends Controller {
 
   def createCustomer = Action.async(BodyParsers.parse.json) { request =>
-
     val customer = request.body.validate[List[Customer]]
     customer.fold(
       errors => Future(JsonResponseGenerator.generateErrorResponse(JsError.toJson(errors))),
-      customer =>
+      customer => {
         customerService.addCustomers(customer).map(result =>
           result match {
             case Right(result: String)     => JsonResponseGenerator.generateResponse(result)
             case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
-          }))
+          })
+      })
   }
 
   def createInvoice = Action.async(BodyParsers.parse.json) { request =>
@@ -39,7 +39,7 @@ class Application @Inject() (customerService: CustomerService, invoiceService: I
             case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
           }))
   }
-  
+
   def createPayment = Action.async(BodyParsers.parse.json) { request =>
 
     val payment = request.body.validate[List[Payment]]
