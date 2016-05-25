@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://localhost:9000/
+HOST: http://hosturl/
 
 # REST API
 
@@ -21,16 +21,13 @@ array object containing one or many customer data.
             {
             "customer_id" : "4",
             "customer_firstname" : "Alex",
-            "customer_lastname" : "A"
-            },
-            {
-            "customer_id" : "2",
-            "customer_firstname" : "Sami"
-            },
-             {
-            "customer_id" : "15",
-            "customer_firstname" : "Steve",
-            "customer_lastname" : "Jhon"
+            "customer_lastname" : "A",
+            "customer_email" : "A@gmail.com",
+            "customer_phone" : "3584999999",
+            "customer_address" : "kamppi",
+            "customer_zipcode" : "00100",
+            "customer_city" : "Helsinki",
+            "customer_country" : "Finland"
             }
         ]
 
@@ -88,7 +85,7 @@ array object containing one or many customer data.
    
     Retrieves all customer data including invoices and payments for given customer ID.
 
-### Get customer data [GET]
+### Get all customer data [GET]
 
 + Parameters
     + id (required, string, `c01`) ... Customer ID
@@ -251,7 +248,7 @@ array object containing one or many payments.
                 "invoice_id": "in10001",
                 "payment_datetime" : "2016-05-22 23:09:33",
                 "payment_type" : "Visa Card"
-          }
+            }
         ]
 
 + Response 200 (application/json)
