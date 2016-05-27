@@ -1,9 +1,11 @@
 package dao
 
-import com.google.inject.ImplementedBy
-import models.Payment
 import scala.concurrent.Future
-import utilities._
+
+import com.google.inject.ImplementedBy
+
+import models.Payment
+import utilities.ErrorMessage
 
 /**
  *
@@ -13,5 +15,5 @@ import utilities._
 trait PaymentDAO {
 
   def add(payments: List[Payment]): Future[Either[ErrorMessage, String]]
-  def getByInvoiceId(invoiceId: String): Future[Option[Payment]]
+
 }

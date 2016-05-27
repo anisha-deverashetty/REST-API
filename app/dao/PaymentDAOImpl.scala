@@ -1,15 +1,27 @@
 package dao
 
-import java.sql._
-import javax.inject.Inject
+import java.sql.SQLException
+
+import scala.Left
+import scala.Right
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import slick.driver.JdbcProfile
+
+import com.google.inject.ImplementedBy
+
+import javax.inject.Inject
+import models.Payment
+import models.PaymentsTable
 import play.api.db.slick.DatabaseConfigProvider
-import play.api._
-import slick.driver.MySQLDriver.api._
-import models._
-import utilities._
+import slick.driver.JdbcProfile
+import slick.driver.MySQLDriver.api.TableQuery
+import slick.driver.MySQLDriver.api.columnExtensionMethods
+import slick.driver.MySQLDriver.api.queryInsertActionExtensionMethods
+import slick.driver.MySQLDriver.api.streamableQueryActionExtensionMethods
+import slick.driver.MySQLDriver.api.stringColumnType
+import slick.driver.MySQLDriver.api.valueToConstColumn
+import utilities.ErrorMessage
+import utilities.ErrorType
 
 /**
  *
@@ -22,16 +34,8 @@ class PaymentDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extend
   val paymentQuery = TableQuery[PaymentsTable]
 
   override def add(payments: List[Payment]): Future[Either[ErrorMessage, String]] = {
-
-    dbConfig.db.run(paymentQuery ++= payments).map(res => Right(payments.size + " entities added")).recover {
-      case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, "database_error"))
+    dbConfig.db.run(paymentQuery ++= payments).map(res => Right(payments.size + " Payment(s) entities added")).recover {
+      case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, ErrorType.Database_Error))
     }
   }
-
-  override def getByInvoiceId(invoiceId: String): Future[Option[Payment]] = {
-
-    dbConfig.db.run(paymentQuery.filter(_.invoice_id === invoiceId).result.headOption)
-    
-  }
-
 }

@@ -1,18 +1,34 @@
 package controllers
 
-import play.api.libs.json._
-import play.api.mvc._
-import javax.inject.Inject
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import models._
-import services._
-import utilities._
+
+import com.google.inject.Singleton
+
+import javax.inject.Inject
+import models.Customer
+import models.Invoice
+import models.Payment
+import play.api.libs.json.JsError
+import play.api.libs.json.JsObject
+import play.api.mvc.Action
+import play.api.mvc.BodyParsers
+import play.api.mvc.Controller
+import services.CustomerService
+import services.InvoiceService
+import services.PaymentService
+import utilities.ErrorMessage
+import utilities.JsonResponseGenerator
+
 /**
  *
  * Created by Anisha Sampath Kumar
  */
 class ApplicationController @Inject() (customerService: CustomerService, invoiceService: InvoiceService, paymentService: PaymentService) extends Controller {
+
+  def index = Action {
+    Ok("Welcome to REST API application")
+  }
 
   def createCustomer = Action.async(BodyParsers.parse.json) { request =>
     val customer = request.body.validate[List[Customer]]

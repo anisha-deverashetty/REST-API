@@ -1,9 +1,12 @@
 package dao
 
-import com.google.inject.ImplementedBy
-import models.Invoice
-import utilities._
 import scala.concurrent.Future
+
+import com.google.inject.ImplementedBy
+
+import models.Invoice
+import play.api.libs.json.JsObject
+import utilities.ErrorMessage
 
 /**
  *
@@ -12,6 +15,6 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[InvoiceDAOImpl])
 trait InvoiceDAO {
   def add(invoices: List[Invoice]): Future[Either[ErrorMessage, String]]
-  
-  def getByCustomerId(customerId: String): Future[Seq[Invoice]]
+
+  def getInvoicesWithPayment(customerId: String): Future[Seq[JsObject]]
 }

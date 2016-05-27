@@ -1,11 +1,16 @@
 package models
 
-import play.api.libs.json._
-import play.api.libs.json.Reads._
-import play.api.libs.functional.syntax._
-import slick.driver.JdbcProfile
 import org.joda.time.DateTime
-import com.github.tototoshi.slick.MySQLJodaSupport._
+
+import play.api.libs.functional.syntax.toFunctionalBuilderOps
+import play.api.libs.functional.syntax.unlift
+import play.api.libs.json.JsPath
+import play.api.libs.json.Reads
+import play.api.libs.json.Reads.StringReads
+import play.api.libs.json.Reads.applicative
+import play.api.libs.json.Reads.functorReads
+import play.api.libs.json.Reads.minLength
+import play.api.libs.json.Writes
 
 /**
  *

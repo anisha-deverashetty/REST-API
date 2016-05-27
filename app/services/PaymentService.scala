@@ -1,11 +1,15 @@
 package services
 
-import javax.inject.Inject
-import com.google.inject.Singleton
-import dao.PaymentDAO
-import models.Payment
-import utilities._
 import scala.concurrent.Future
+
+import com.google.inject.ImplementedBy
+import com.google.inject.Singleton
+
+import dao.PaymentDAO
+import dao.PaymentDAOImpl
+import javax.inject.Inject
+import models.Payment
+import utilities.ErrorMessage
 
 /**
  *
@@ -13,12 +17,9 @@ import scala.concurrent.Future
  */
 @Singleton
 class PaymentService @Inject() (paymentDAO: PaymentDAO) {
+  
   def addPayments(payments: List[Payment]): Future[Either[ErrorMessage, String]] = {
     paymentDAO.add(payments)
   }
-  def getPaymentByInvoice(invoiceId: String): Future[Option[Payment]] = {
-    paymentDAO.getByInvoiceId(invoiceId)
-  }
-  
   
 }
