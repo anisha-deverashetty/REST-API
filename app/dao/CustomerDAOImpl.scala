@@ -24,21 +24,38 @@ import utilities.ErrorMessage
 import utilities.ErrorType
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
-class CustomerDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extends CustomerDAO {
 
+/**
+ * Data access class for Customer
+ */
+class CustomerDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extends CustomerDAO {
+  
+  //database configurations
   val dbConfig = dbConfigProvider.get[JdbcProfile]
+  //query for customer table
   val customerQuery = TableQuery[CustomersTable]
 
+  /**
+   * adds List of Customers to database
+   * 
+   * @param customers list of customers
+   * @return future of either success message string or error message 
+   */
   override def add(customers: List[Customer]): Future[Either[ErrorMessage, String]] = {
     val result = dbConfig.db.run(customerQuery ++= customers)
     result.map(res => Right(customers.size + " Customer(s) added")).recover {
       case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, ErrorType.Database_Error))
     }
   }
-
+  
+  /**
+   * gets customer data from database for given customer id
+   * 
+   * @param customerId customer id
+   * @return future of either customer or not found error message
+   */
   override def get(customerId: String): Future[Either[ErrorMessage, Customer]] = {
     val result = dbConfig.db.run(customerQuery.filter(_.customer_id === customerId).result.headOption)
     result.map(customer => customer match {

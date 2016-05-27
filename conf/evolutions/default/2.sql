@@ -12,7 +12,8 @@ CREATE TABLE f_invoices (
     invoice_datetime datetime NOT NULL, 
     warehouse_id varchar(64),
   	supplier_id varchar(64),
-  	salesperson_id varchar(64)
+  	salesperson_id varchar(64),
+  	INDEX customer_index (customer_id)
 );
 
 # --- !Downs

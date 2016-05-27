@@ -12,17 +12,10 @@ import play.api.libs.json.Writes
 import play.api.libs.json.Writes.StringWrites
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
-/**
- * Customer entity.
- *
- * @param id        unique id
- * @param firstName first name
- * @param lastName  last name
- */
+//Customer entity
 case class Customer(
   customer_id: String,
   customer_firstname: String,
@@ -34,7 +27,10 @@ case class Customer(
   customer_city: Option[String],
   customer_country: Option[String])
 
+  
 object Customer {
+  
+  //for converting from JsValue to Customer
   implicit val customerReads: Reads[Customer] = (
     (JsPath \ "customer_id").read[String](minLength[String](1)) and
     (JsPath \ "customer_firstname").read[String](minLength[String](1)) and
@@ -46,6 +42,7 @@ object Customer {
     (JsPath \ "customer_city").readNullable[String] and
     (JsPath \ "customer_country").readNullable[String])(Customer.apply _)
 
+  //for converting Customer to JsValue   
   implicit val customerWrites: Writes[Customer] = (
     (JsPath \ "customer_id").write[String] and
     (JsPath \ "customer_firstname").write[String] and

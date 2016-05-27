@@ -14,6 +14,13 @@ import dao.PaymentDAO
 import models.Payment
 import services.PaymentService
 
+/**
+ * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Unit test for PaymentService
+ */
 @RunWith(classOf[JUnitRunner])
 class PaymentServiceSpec extends Specification with Mockito {
 

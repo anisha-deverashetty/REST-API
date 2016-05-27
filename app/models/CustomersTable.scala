@@ -5,12 +5,12 @@ import slick.driver.MySQLDriver.api._
 import play.api.db.slick.DatabaseConfigProvider
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
 /**
- * Mapped customers table object.
+ * Mapped customers table object
+ * 
  */
 class CustomersTable(tag: Tag) extends Table[Customer](tag, "d_customers") {
 

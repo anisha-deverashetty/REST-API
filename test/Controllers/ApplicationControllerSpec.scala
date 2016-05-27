@@ -31,6 +31,13 @@ import services.PaymentService
 import utilities.ErrorMessage
 import utilities.ErrorType
 
+/**
+ * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Unit test for AppilcationController
+ */
 @RunWith(classOf[JUnitRunner])
 class ApplicationControllerSpec extends Specification with Results with Mockito {
 
@@ -89,11 +96,11 @@ class ApplicationControllerSpec extends Specification with Results with Mockito 
 
   "Customers#create" should {
     "create customer(s)" in {
-      mockCustomerService.addCustomers(any[List[Customer]]) returns Future(Right("1 Customer entities added"))
+      mockCustomerService.addCustomers(any[List[Customer]]) returns Future(Right("1 Customer(s) added"))
       val request = FakeRequest().withBody(Json.toJson(fakeCustomerData1))
       val result: Future[Result] = testController.createCustomer().apply(request)
       status(result) must be equalTo 200
-      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Customer entities added"
+      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Customer(s) added"
       there was one(mockCustomerService).addCustomers(any[List[Customer]])
     }
   }
@@ -138,11 +145,11 @@ class ApplicationControllerSpec extends Specification with Results with Mockito 
 
   "Invoices#create" should {
     "create invoice(s)" in {
-      mockInvoiceService.addInvoices(any[List[Invoice]]) returns Future(Right("1 Invoice entities added"))
+      mockInvoiceService.addInvoices(any[List[Invoice]]) returns Future(Right("1 Invoice(s) added"))
       val request = FakeRequest().withBody(Json.toJson(fakeInvoiceData))
       val result: Future[Result] = testController.createInvoice().apply(request)
       status(result) must be equalTo 200
-      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Invoice entities added"
+      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Invoice(s) added"
       there was one(mockInvoiceService).addInvoices(any[List[Invoice]])
     }
   }
@@ -167,11 +174,11 @@ class ApplicationControllerSpec extends Specification with Results with Mockito 
 
   "Payments#create" should {
     "create payment(s)" in {
-      mockPaymentService.addPayments(any[List[Payment]]) returns Future(Right("1 Payment entities added"))
+      mockPaymentService.addPayments(any[List[Payment]]) returns Future(Right("1 Payment(s) added"))
       val request = FakeRequest().withBody(Json.toJson(fakePaymentData))
       val result: Future[Result] = testController.createPayment().apply(request)
       status(result) must be equalTo 200
-      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Payment entities added"
+      (contentAsJson(result) \ "message").as[String] must be equalTo "1 Payment(s) added"
       there was one(mockPaymentService).addPayments(any[List[Payment]])
     }
   }

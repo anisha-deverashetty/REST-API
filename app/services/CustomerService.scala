@@ -18,17 +18,33 @@ import play.api.libs.json.Json
 import utilities.ErrorMessage
 
 /**
- *
  * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Service class to access CustomerDAO
  */
 @Singleton
 class CustomerService @Inject() (customerDAO: CustomerDAO, invoiceService: InvoiceService,
                                  implicit val ec: ExecutionContext) {
-
+  
+  /**
+   * sends List of Customers to CustomerDAO
+   * 
+   * @param customers list of customers
+   * @return future of either success message string or error message 
+   */
   def addCustomers(customer: List[Customer]): Future[Either[ErrorMessage, String]] = {   
     customerDAO.add(customer)
   }
-
+  
+  /**
+   * gets all customer data for given customer id
+   * gets customer data from customerDAO and invoices+payments from InvoiceService 
+   * 
+   * @param customerId customer id
+   * @return future of either all customer data or not found error message
+   */
   def getAllCustomerData(customerId: String): Future[Either[ErrorMessage, JsObject]] = {
 
     val result = customerDAO.get(customerId)

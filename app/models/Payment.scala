@@ -13,15 +13,10 @@ import play.api.libs.json.Reads.minLength
 import play.api.libs.json.Writes
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
-/**
- * Payment entity.
- *
- * @param id        unique id
- */
+//Payment entity
 case class Payment(
   payment_id: String,
   invoice_id: String,
@@ -30,12 +25,14 @@ case class Payment(
 
 object Payment {
 
+  //for converting from JsValue to Payment
   implicit val paymentReads: Reads[Payment] = (
     (JsPath \ "payment_id").read[String](minLength[String](1)) and
     (JsPath \ "invoice_id").read[String](minLength[String](1)) and
     (JsPath \ "payment_datetime").read[DateTime](Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")) and
     (JsPath \ "payment_type").readNullable[String])(Payment.apply _)
 
+  //for converting Payment to JsValue  
   implicit val paymentWrites: Writes[Payment] = (
     (JsPath \ "payment_id").write[String] and
     (JsPath \ "invoice_id").write[String] and

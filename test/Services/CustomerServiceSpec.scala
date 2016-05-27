@@ -20,7 +20,13 @@ import models.Customer
 import services.CustomerService
 import services.InvoiceService
 
+/**
+ * Created by Anisha Sampath Kumar
+ */
 
+/**
+ * Unit test for CustomerService
+ */
 @RunWith(classOf[JUnitRunner])
 class CustomerServiceSpec extends Specification with Mockito {
 

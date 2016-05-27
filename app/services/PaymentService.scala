@@ -12,12 +12,21 @@ import models.Payment
 import utilities.ErrorMessage
 
 /**
- *
  * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Service class to access PaymentDAO
  */
 @Singleton
 class PaymentService @Inject() (paymentDAO: PaymentDAO) {
   
+  /**
+   * sends List of Payments to PaymentDAO
+   * 
+   * @param payments list of payments
+   * @return future of either success message string or error message 
+   */
   def addPayments(payments: List[Payment]): Future[Either[ErrorMessage, String]] = {
     paymentDAO.add(payments)
   }

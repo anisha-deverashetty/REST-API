@@ -14,15 +14,10 @@ import play.api.libs.json.Reads.minLength
 import play.api.libs.json.Writes
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
-/**
- * Invoice entity.
- *
- * @param id        unique id
- */
+//Invoice entity
 case class Invoice(
   invoice_id: String,
   customer_id: String,
@@ -36,6 +31,7 @@ case class Invoice(
 
 object Invoice {
 
+  //for converting from JsValue to Invoice
   implicit val invoiceReads: Reads[Invoice] = (
     (JsPath \ "invoice_id").read[String](minLength[String](1)) and
     (JsPath \ "customer_id").read[String](minLength[String](1)) and
@@ -47,7 +43,8 @@ object Invoice {
     (JsPath \ "supplier_id").readNullable[String] and
     (JsPath \ "salesperson_id").readNullable[String])(Invoice.apply _)
 
-  implicit val invoiceWrites: Writes[Invoice] = (
+    //for converting Invoice to JsValue
+    implicit val invoiceWrites: Writes[Invoice] = (
     (JsPath \ "invoice_id").write[String] and
     (JsPath \ "customer_id").write[String] and
     (JsPath \ "net_amount").writeNullable[BigDecimal] and

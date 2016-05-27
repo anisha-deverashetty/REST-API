@@ -10,10 +10,12 @@ import play.api.mvc.Results.NotFound
 import play.api.mvc.Results.Ok
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
+/**
+ * Generates json response
+ */
 object JsonResponseGenerator extends ResponseGenerator {
 
   def generateResponse(data: String): Result = {

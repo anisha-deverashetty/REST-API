@@ -24,6 +24,13 @@ import services.InvoiceService
 import services.PaymentService
 import utilities.ErrorMessage
 
+/**
+ * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Unit test for InvoiceService
+ */
 @RunWith(classOf[JUnitRunner])
 class InvoiceServiceSpec extends Specification with Mockito {
 

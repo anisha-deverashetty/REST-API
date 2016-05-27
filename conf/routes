@@ -1,8 +1,7 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+# This file defines all application routes
 
-# Home page
+GET      /									 controllers.ApplicationController.index	
 
 POST     /customer                           controllers.ApplicationController.createCustomer
 

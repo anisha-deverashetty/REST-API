@@ -6,13 +6,13 @@ import play.api.db.slick.DatabaseConfigProvider
 import org.joda.time.DateTime
 import com.github.tototoshi.slick.MySQLJodaSupport._
 
+
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
 /**
- * Mapped payments table object.
+ * Mapped payments table object
  */
 class PaymentsTable(tag: Tag) extends Table[Payment](tag, "f_payments") {
 

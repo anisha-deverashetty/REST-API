@@ -7,13 +7,11 @@ import org.joda.time.DateTime
 import com.github.tototoshi.slick.MySQLJodaSupport._
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
 
-
 /**
- * Mapped invoices table object.
+ * Mapped invoices table object
  */
 class InvoicesTable(tag: Tag) extends Table[Invoice](tag, "f_invoices") {
 

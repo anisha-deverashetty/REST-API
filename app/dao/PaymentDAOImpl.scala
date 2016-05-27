@@ -24,17 +24,28 @@ import utilities.ErrorMessage
 import utilities.ErrorType
 
 /**
- *
  * Created by Anisha Sampath Kumar
  */
-class PaymentDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extends PaymentDAO {
 
+/**
+ * Data access class for Payment
+ */
+class PaymentDAOImpl @Inject() (dbConfigProvider: DatabaseConfigProvider) extends PaymentDAO {
+  
+  //database configurations
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
+  //query for payment table
   val paymentQuery = TableQuery[PaymentsTable]
 
+  /**
+   * adds List of Payments to database
+   * 
+   * @param payments list of payments
+   * @return future of either success message string or error message 
+   */
   override def add(payments: List[Payment]): Future[Either[ErrorMessage, String]] = {
-    dbConfig.db.run(paymentQuery ++= payments).map(res => Right(payments.size + " Payment(s) entities added")).recover {
+    dbConfig.db.run(paymentQuery ++= payments).map(res => Right(payments.size + " Payment(s) added")).recover {
       case ex: SQLException => Left(new ErrorMessage(ex.getCause.getMessage, ErrorType.Database_Error))
     }
   }

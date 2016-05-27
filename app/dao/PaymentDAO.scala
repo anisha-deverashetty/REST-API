@@ -8,8 +8,11 @@ import models.Payment
 import utilities.ErrorMessage
 
 /**
- *
  * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Holds data access methods for Payment
  */
 @ImplementedBy(classOf[PaymentDAOImpl])
 trait PaymentDAO {

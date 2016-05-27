@@ -21,15 +21,26 @@ import utilities.ErrorMessage
 import utilities.JsonResponseGenerator
 
 /**
- *
  * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * REST Controller
  */
 class ApplicationController @Inject() (customerService: CustomerService, invoiceService: InvoiceService, paymentService: PaymentService) extends Controller {
 
+  /**
+   * gets welcome message for root url
+   */
   def index = Action {
     Ok("Welcome to REST API application")
   }
-
+  
+  /**
+   * adds List of customers to database after successful validation
+   * 
+   * @return result json response  
+   */
   def createCustomer = Action.async(BodyParsers.parse.json) { request =>
     val customer = request.body.validate[List[Customer]]
     customer.fold(
@@ -42,7 +53,12 @@ class ApplicationController @Inject() (customerService: CustomerService, invoice
           })
       })
   }
-
+  
+  /**
+   * adds List of invoices to database after successful validation
+   * 
+   * @return result json response  
+   */
   def createInvoice = Action.async(BodyParsers.parse.json) { request =>
 
     val invoice = request.body.validate[List[Invoice]]
@@ -55,7 +71,12 @@ class ApplicationController @Inject() (customerService: CustomerService, invoice
             case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
           }))
   }
-
+  
+  /**
+   * adds List of payments to database after successful validation
+   * 
+   * @return result json response  
+   */
   def createPayment = Action.async(BodyParsers.parse.json) { request =>
 
     val payment = request.body.validate[List[Payment]]
@@ -68,7 +89,13 @@ class ApplicationController @Inject() (customerService: CustomerService, invoice
             case Left(error: ErrorMessage) => JsonResponseGenerator.generateErrorResponse(error)
           }))
   }
-
+  
+  /**
+   * Gets all customer data 
+   * 
+   * @param customerId customer id
+   * @return result json response containing customer data
+   */
   def getCustomer(customerId: String) = Action.async {
 
     val res = customerService.getAllCustomerData(customerId)

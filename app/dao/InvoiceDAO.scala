@@ -9,8 +9,11 @@ import play.api.libs.json.JsObject
 import utilities.ErrorMessage
 
 /**
- *
  * Created by Anisha Sampath Kumar
+ */
+
+/**
+ * Holds data access methods for Invoice
  */
 @ImplementedBy(classOf[InvoiceDAOImpl])
 trait InvoiceDAO {
