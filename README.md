@@ -1,10 +1,5 @@
 # REST-API
-REST API using Scala Play Framework
-
-## REST API
-
-The REST API allows to add customer, invoice and payment for invoice. It also allows to retrieve all customer data including invoices 
-and payments for each customer. The API is developed using Scala and Play Framework. HOST: http://hosturl/
+REST-API project is using Scala Play Framework. The REST API allows to add customer, invoice and payment for invoice. It also allows to retrieve all customer data including invoices and payments for each customer. The API is developed using Scala and Play Framework. HOST: http://hosturl/
 
 ## Customer [/customer]
 
